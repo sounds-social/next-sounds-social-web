@@ -37,32 +37,36 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { axiosClient } from '../lib/axiosClient'
-import { useAuthStore } from '../stores/auth'
+import { ref } from "vue";
+import { axiosClient } from "../lib/axiosClient";
+import { useAuthStore } from "../stores/auth";
 
-const email = ref('')
-const password = ref('')
+const email = ref("");
+const password = ref("");
 
 const login = async () => {
-  console.log(email.value)
-  console.log(password.value)
+  console.log(email.value);
+  console.log(password.value);
 
-  const response = await axiosClient.post('/login', {
+  const response = await axiosClient.post("/login", {
     email: email.value,
-    password: password.value
-  })
+    password: password.value,
+  });
 
   if (response.status === 200) {
-    const store = useAuthStore()
-    const router = useRouter()
+    const store = useAuthStore();
+    const router = useRouter();
 
-    await store.setUserToken(
-      response.data.data.token,
-      response.data.data.user
-    )
+    await store.setUserToken(response.data.data.token, response.data.data.user);
 
-    router.push({ path: '/' })
+    router.push({ path: "/" });
   }
+};
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+if (authStore.user) {
+  router.push({ path: "/" });
 }
 </script>
