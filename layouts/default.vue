@@ -1,7 +1,7 @@
 <template>
   <div>
     <AppHeader />
-    <slot />
+    <slot v-if="!authStore.loading" />
   </div>
 </template>
 <script lang="ts" setup>

@@ -6,7 +6,9 @@ const TOKEN_KEY = 'APP_AUTH_TOKEN'
 export const useAuthStore = defineStore('auth', {
   state: () => ({ 
     token: null, 
-    user: null
+    user: null,
+    error: null,
+    loading: true
   }),
   actions: {
     async setUserToken (token: string, user: any = null) {
@@ -18,13 +20,25 @@ export const useAuthStore = defineStore('auth', {
     async initUserData () {
       this.token = localStorage.getItem(TOKEN_KEY)
 
-      const response = await axiosClient.get('/user', {
-        headers: {
-          Authorization: `Bearer ${this.token}`
-        }
-      })
+      try {
+        const response = await axiosClient.get('/user', {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
 
-      this.user = response.data
+        this.user = response.data
+      } catch (error: any) {
+        this.error = error.response.data.message
+      }
+
+      this.loading = false
+    },
+    async logout () {
+      localStorage.removeItem(TOKEN_KEY)
+      
+      this.token = null
+      this.user = null
     }
   }
 })
