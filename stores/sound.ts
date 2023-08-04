@@ -23,7 +23,11 @@ export const useSoundStore = defineStore("sound", {
     async loadPublicSounds() {
       const token = localStorage.getItem(TOKEN_KEY);
 
-      const response = await axiosClient.get("/sounds");
+      const response = await axiosClient.get("/sounds", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       console.log(response.data);
       this.sounds = response.data.data;

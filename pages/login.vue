@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-5 py-6 px-4 max-w-lg mx-auto shadow-lg rounded-lg">
-      <h1 class="font-bold text-3xl mb-3">Login</h1>
+      <h1 class="font-black text-4xl mb-3">Login</h1>
 
       <div v-for="error in errors" :key="error">
         <p class="text-red-500 py-3">{{ error }}</p>
