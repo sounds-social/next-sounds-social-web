@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="sound in soundStore.sounds" :key="sound.id" class="mt-16">
+    <div v-for="sound in soundStore.sounds" :key="sound.id" class="mt-10 p-4">
       <div class="text-4xl text-slate-700 font-black">{{ sound.title }}</div>
       <div class="mt-2 text-slate-500 font-bold">{{ sound.user.name }}</div>
 
