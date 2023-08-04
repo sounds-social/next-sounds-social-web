@@ -6,7 +6,7 @@
 
       <ClientOnly>
         <Waveform
-          :pathToSound="sound.sound_file_path"
+          :pathToSound="`http://localhost:8000/file${sound.sound_file_path}`"
           :id="sound.id"
         ></Waveform>
       </ClientOnly>
