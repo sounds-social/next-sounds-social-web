@@ -1,10 +1,17 @@
 <template>
   <div class="py-6 px-4">
-    <div>Home</div>
+    <div v-if="!authStore.loading">
+      <div v-if="authStore.user">
+        <h1 class="text-6xl mb-14 mt-8 text-slate-900 font-black">#Global Sounds</h1>
 
-    <div v-if="authStore && authStore.user">
-      You are logged in! 
-      <span v-text="authStore.user"></span>
+        <SoundListPublic />
+
+        You are logged in! 
+        <span v-text="authStore.user"></span>
+      </div>
+      <div v-else>
+        Marketing homepage
+      </div>
     </div>
   </div>
 </template>

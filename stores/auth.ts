@@ -1,15 +1,24 @@
 import { axiosClient } from "../lib/axiosClient";
 import { defineStore } from "pinia";
 
-const TOKEN_KEY = 'APP_AUTH_TOKEN'
+export const TOKEN_KEY = 'APP_AUTH_TOKEN'
+
+interface IInitialState {
+  token: null | string;
+  user: null | any;
+  error: null | string;
+  loading: boolean;
+}
+
+const initialState: IInitialState = { 
+  token: null, 
+  user: null,
+  error: null,
+  loading: true
+}
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({ 
-    token: null, 
-    user: null,
-    error: null,
-    loading: true
-  }),
+  state: () => (initialState),
   actions: {
     async setUserToken (token: string, user: any = null) {
       localStorage.setItem(TOKEN_KEY, token)
@@ -36,9 +45,14 @@ export const useAuthStore = defineStore('auth', {
     },
     async logout () {
       localStorage.removeItem(TOKEN_KEY)
-      
       this.token = null
       this.user = null
+
+      await axiosClient.post('/logout', {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      })      
     }
   }
 })
