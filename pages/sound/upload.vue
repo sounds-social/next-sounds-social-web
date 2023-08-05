@@ -97,8 +97,7 @@ const upload = async () => {
   } else if (response.status === 201) {
     const router = useRouter();
 
-    // TODO: push detail page
-    router.push({ path: "/" });
+    router.push({ path: `/sound/${response.data.data.slug}` });
   }
 };
 
