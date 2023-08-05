@@ -7,7 +7,7 @@
         <p class="text-red-500 py-3">{{ error }}</p>
       </div>
 
-      <form class="mt-4" @submit.prevent="upload">
+      <form class="mt-4" @submit.prevent="upload" enctype="multipart/form-data">
         <div class="mb-4">
           <label class="block mb-2" for="title">Title</label>
           <input
@@ -43,6 +43,7 @@
             class="w-full border border-gray-400 rounded-lg px-3 py-2"
             type="file"
             id="soundFile"
+            accept="audio/*"
           />
         </div>
 
@@ -67,24 +68,33 @@ import { TOKEN_KEY, useAuthStore } from "../../stores/auth";
 const title = ref("");
 const description = ref("");
 const isPublic = ref(false);
-const soundFile = ref(null);
 
 const errors = ref([]);
 
 const upload = async () => {
   const token = localStorage.getItem(TOKEN_KEY);
 
+  const formData = new FormData();
+
+  const soundFileInput = document.querySelector('#soundFile')
+
+  formData.append(
+    'file', 
+    soundFileInput.files[0]
+  );
+
+  formData.append('title', title.value);
+  formData.append('description', description.value);
+  formData.append('is_public', isPublic.value.toString());
+
   const response = await axiosClient
     .post(
       "/sounds",
-      {
-        title: title.value,
-        description: description.value,
-        is_public: isPublic.value,
-      },
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
         },
       }
     )
@@ -96,6 +106,8 @@ const upload = async () => {
     errors.value = responseErrors;
   } else if (response.status === 201) {
     const router = useRouter();
+
+    soundFileInput.value = '';
 
     router.push({ path: `/sound/${response.data.data.slug}` });
   }
