@@ -92,13 +92,12 @@ const upload = async () => {
 
   const responseErrors = getErrorsFromResponse(response);
 
-  console.log(responseErrors)
-
   if (responseErrors) {
     errors.value = responseErrors;
-  } else if (response.status === 200) {
+  } else if (response.status === 201) {
     const router = useRouter();
 
+    // TODO: push detail page
     router.push({ path: "/" });
   }
 };
