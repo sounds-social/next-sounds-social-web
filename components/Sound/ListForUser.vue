@@ -5,7 +5,11 @@
 <script lang="ts" setup>
 import { useSoundStore } from "../../stores/sound";
 
+const props = defineProps<{
+  id: number
+}>();
+
 const soundStore = useSoundStore();
 
-await soundStore.loadPublicSounds();
+await soundStore.loadSoundsForUser(props.id);
 </script>

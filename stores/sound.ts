@@ -22,6 +22,7 @@ export const useSoundStore = defineStore("sound", {
   actions: {
     async loadPublicSounds() {
       const token = localStorage.getItem(TOKEN_KEY);
+      this.loading = true;
 
       const response = await axiosClient.get("/sounds", {
         headers: {
@@ -29,8 +30,21 @@ export const useSoundStore = defineStore("sound", {
         },
       });
 
-      console.log(response.data);
       this.sounds = response.data.data;
+      this.loading = false;
+    },
+    async loadSoundsForUser(userId: number) {
+      const token = localStorage.getItem(TOKEN_KEY);
+      this.loading = true;
+
+      const response = await axiosClient.get(`/sounds?user_id=${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      this.sounds = response.data.data;
+      this.loading = false;
     },
   },
 });

@@ -67,7 +67,7 @@ import { TOKEN_KEY, useAuthStore } from "../../stores/auth";
 
 const title = ref("");
 const description = ref("");
-const isPublic = ref(false);
+const isPublic = ref(true);
 
 const errors = ref([]);
 

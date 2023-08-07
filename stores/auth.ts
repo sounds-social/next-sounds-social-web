@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth', {
           }
         })
 
-        this.user = response.data
+        this.user = response.data.data
       } catch (error: any) {
         this.error = error.response.data.message
       }

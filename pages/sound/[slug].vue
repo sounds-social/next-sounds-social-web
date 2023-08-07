@@ -2,7 +2,9 @@
   <div v-if="sound" class="py-6 px-4">
     <!-- TODO: Reuse from ListPublic.vue -->
     <div class="text-4xl text-slate-700 font-black">{{ sound.title }}</div>
-    <div class="mt-2 text-slate-500 font-bold text-xl">{{ sound.user.name }}</div>
+    <div class="mt-2 text-slate-500 font-bold text-xl">
+      <NuxtLink :to="`/profile/${sound.user.slug}`">{{ sound.user.name }}</NuxtLink>
+    </div>
 
     <ClientOnly>
       <Waveform

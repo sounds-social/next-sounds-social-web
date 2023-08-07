@@ -40,8 +40,20 @@
       </NuxtLink>
     </div>
 
-    <NuxtLink
-      class="text-md hover:text-blue-200 transition"
+    <div class="flex items-center">
+      <NuxtLink
+        class="text-md ml-10 flex items-center hover:text-blue-200 transition"
+        :to="`/profile/${authStore.user?.slug}`"
+        :class="{
+          'text-blue-100': route.name === 'profile-slug',
+        }"
+        v-if="!authStore.loading && authStore.user"
+      >
+        Profile
+      </NuxtLink>
+
+      <NuxtLink
+      class="text-md hover:text-blue-200 transition ml-10"
       to="/login"
       :class="{
         'text-blue-100': route.name === 'login',
@@ -51,6 +63,7 @@
       <span v-if="!authStore.user">Login</span>
       <span v-if="authStore.user" @click.prevent="logout">Logout</span>
     </NuxtLink>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
