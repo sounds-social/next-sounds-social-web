@@ -5,9 +5,6 @@
         <BaseTitle>#Global Sounds</BaseTitle>
 
         <SoundListPublic />
-
-        You are logged in! 
-        <span v-text="authStore.user"></span>
       </div>
       <div v-else>
         Marketing homepage

@@ -13,7 +13,7 @@
       ></Waveform>
     </ClientOnly>
 
-    <p class="text-lg">{{ sound.description }}</p>
+    <p class="text-lg max-w-3xl">{{ sound.description }}</p>
   </div>
 </template>
 <script lang="ts" setup>
