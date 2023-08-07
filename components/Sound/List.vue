@@ -8,6 +8,13 @@
         <NuxtLink :to="`/profile/${sound.user.slug}`">{{ sound.user.name }}</NuxtLink>
       </div>
 
+      <!-- TODO: Reuse for sound slug route -->
+      <div v-if="!sound.is_public" class="my-2 text-md text-gray-400 inline-block">
+        <div class="py-1 px-3 border-2 border-gray-300 rounded-lg select-none">
+          Private
+        </div>
+      </div>
+
       <ClientOnly>
         <Waveform
           :pathToSound="`http://localhost:8000${sound.sound_file_path}`"

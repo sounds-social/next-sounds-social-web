@@ -3,7 +3,18 @@
     <!-- TODO: Reuse from ListPublic.vue -->
     <div class="text-4xl text-slate-700 font-black">{{ sound.title }}</div>
     <div class="mt-2 text-slate-500 font-bold text-xl">
-      <NuxtLink :to="`/profile/${sound.user.slug}`">{{ sound.user.name }}</NuxtLink>
+      <NuxtLink :to="`/profile/${sound.user.slug}`">{{
+        sound.user.name
+      }}</NuxtLink>
+    </div>
+
+    <div
+      v-if="!sound.is_public"
+      class="my-2 text-md text-gray-400 inline-block"
+    >
+      <div class="py-1 px-3 border-2 border-gray-300 rounded-lg select-none">
+        Private
+      </div>
     </div>
 
     <ClientOnly>
@@ -24,7 +35,7 @@ const route = useRoute();
 
 const sound = ref(null);
 
-const token = localStorage.getItem(TOKEN_KEY)
+const token = localStorage.getItem(TOKEN_KEY);
 
 const response = await axiosClient.get(`/sounds/${route.params.slug}`, {
   headers: {
