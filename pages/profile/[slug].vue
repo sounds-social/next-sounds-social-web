@@ -4,7 +4,7 @@
       <div class="basis-8/12">
         <BaseTitle>{{ profile.name }}</BaseTitle>
 
-        <div v-if="profile.can_follow">
+        <div v-if="profile.can_follow" class="mt-4">
           <!-- TODO: reuse -->
           <NuxtLink
             :class="`

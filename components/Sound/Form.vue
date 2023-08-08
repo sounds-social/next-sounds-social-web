@@ -7,7 +7,7 @@
         <p class="text-red-500 py-3">{{ error }}</p>
       </div>
 
-      <form class="mt-4" @submit.prevent="upsert" enctype="multipart/form-data">
+      <form class="mt-8" @submit.prevent="upsert" enctype="multipart/form-data">
         <div class="mb-4">
           <label class="block mb-2" for="title">Title*</label>
           <input
