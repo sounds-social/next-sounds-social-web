@@ -97,7 +97,7 @@ const upsert = async () => {
   const formData = new FormData();
 
   const soundFileInput = document.querySelector("#soundFile");
-  
+
   if (!props.sound) {
     formData.append("file", soundFileInput.files[0]);
   }
@@ -115,18 +115,11 @@ const upsert = async () => {
   let response;
 
   if (props.sound) {
-    console.log(isPublic.value)
-
     response = await axiosClient
-      .put(`/sounds/${props.sound.slug}`, {
-        title: title.value,
-        description: description.value,
-        is_public: isPublic.value === true,
-        cover_file: coverImageFileInput.files[0],
-      }, {
+      .post(`/sounds/${props.sound.slug}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "multipart/form-data",
         },
       })
       .catch((e) => e.response);
@@ -147,14 +140,12 @@ const upsert = async () => {
     errors.value = responseErrors;
   } else if (response.status === 201 || response.status === 200) {
     const router = useRouter();
-    
+
     coverImageFileInput.value = "";
-    
+
     if (soundFileInput) {
       soundFileInput.value = "";
     }
-
-    console.log(response);
 
     router.push({ path: `/sound/${response.data.data.slug}` });
   }

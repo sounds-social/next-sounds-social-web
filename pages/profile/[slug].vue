@@ -1,9 +1,9 @@
 <template>
   <div class="py-6 px-4" v-if="profile">
-    <BaseTitle>{{ profile.name }}</BaseTitle>
-
     <div class="flex flex-row">
       <div class="basis-8/12">
+        <BaseTitle>{{ profile.name }}</BaseTitle>
+
         <div v-if="profile.can_follow">
           <!-- TODO: reuse -->
           <NuxtLink
@@ -17,11 +17,11 @@
           </NuxtLink>
         </div>
 
-        <h2 class="mt-2 text-slate-500 font-bold text-3xl">Sounds</h2>
+        <h2 class="mt-4 text-slate-500 font-bold text-3xl">Sounds</h2>
 
         <SoundListForUser :id="profile.id" />
       </div>
-      <div class="basis-4/12 pl-5 text-slate-600 font-bold text-xl">
+      <div class="basis-4/12 pl-5 mt-10 text-slate-600 font-bold text-xl">
         <div>
           {{ profile.followers_count }} follower{{
             profile.followers_count === 1 ? "" : "s"

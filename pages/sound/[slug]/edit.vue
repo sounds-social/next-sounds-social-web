@@ -24,6 +24,4 @@ const loadData = async () => {
 };
 
 await loadData();
-
-console.log(sound);
 </script>
