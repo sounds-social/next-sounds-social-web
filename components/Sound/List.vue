@@ -1,5 +1,8 @@
 <template>
   <div v-if="!soundStore.loading">
+    <div v-if="soundStore.sounds.length === 0" class="mt-3 text-slate-500 italic text-md">
+      No sounds found.
+    </div>
     <div
       v-for="sound in soundStore.sounds"
       :key="sound.id"
