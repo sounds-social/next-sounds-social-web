@@ -2,7 +2,9 @@
   <div class="py-6 px-4">
     <div v-if="!authStore.loading">
       <div v-if="authStore.user">
-        <BaseTitle>#Global Sounds</BaseTitle>
+        <div class="mb-12 mt-6">
+          <BaseTitle>#Global Sounds</BaseTitle>
+        </div>
 
         <SoundListPublic />
       </div>
