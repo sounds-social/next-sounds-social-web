@@ -3,9 +3,7 @@
     <div class="flex flex-row">
       <div class="basis-8/12">
         <div class="flex items-center">
-          <BaseTitle>{{ profile.name }}</BaseTitle>
-
-          <div class="ml-8">
+          <div class="mr-12 px-4">
             <div
               :style="[
                 'width: 180px; height: 180px',
@@ -13,13 +11,15 @@
                   ? `background-image: url(http://localhost:8000${profile.avatar_file_path})`
                   : '',
               ]"
-              class="bg-cover bg-center rounded-md mr-10"
+              class="bg-cover bg-center rounded-md"
               :class="{
                 'bg-gradient-to-r from-cyan-500 to-blue-500':
                   !profile.avatar_file_path,
               }"
             ></div>
           </div>
+
+          <BaseTitle>{{ profile.name }}</BaseTitle>
         </div>
 
         <div class="flex items-center">
