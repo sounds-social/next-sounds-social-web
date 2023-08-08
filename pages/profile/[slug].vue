@@ -5,6 +5,7 @@
     <div class="flex flex-row">
       <div class="basis-8/12">
         <div v-if="profile.can_follow">
+          <!-- TODO: reuse -->
           <NuxtLink
             :class="`
             px-3 py-1 border border-blue-400 text-blue-600 
