@@ -57,7 +57,7 @@
 </template>
 <script lang="ts" setup>
 import { TOKEN_KEY, useAuthStore } from "@/stores/auth";
-import { axiosClient } from "../../lib/axiosClient";
+import { axiosClient } from "../../../lib/axiosClient";
 
 const route = useRoute();
 
@@ -74,6 +74,4 @@ const response = await axiosClient.get(`/sounds/${route.params.slug}`, {
 });
 
 sound.value = response?.data?.data;
-
-console.log(sound.value);
 </script>
