@@ -81,7 +81,6 @@ const edit = async () => {
 
   const responseErrors = getErrorsFromResponse(response);
 
-  console.log(response)
   if (responseErrors) {
     errors.value = responseErrors;
   } else if (response.status === 201 || response.status === 200) {

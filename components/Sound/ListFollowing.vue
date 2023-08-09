@@ -1,5 +1,5 @@
 <template>
-  <SoundList />
+  <SoundList @load="load(true)" />
 </template>
 
 <script lang="ts" setup>
@@ -7,7 +7,9 @@ import { useSoundStore } from "../../stores/sound";
 
 const soundStore = useSoundStore();
 
-await soundStore.loadSoundsFollowing();
+const load = async (ignoreLoading: boolean = false) => {
+  await soundStore.loadSoundsFollowing(ignoreLoading);
+}
 
-console.log('loaded')
+await load();
 </script>

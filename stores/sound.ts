@@ -13,51 +13,83 @@ const initialState: IInitialState = {
   loading: true,
 };
 
+export const LOAD_MORE_AMOUNT = 10;
+
+const getPath = async (path: string) => {
+  const token = localStorage.getItem(TOKEN_KEY);
+
+  return await axiosClient.get(
+    path,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
 export const useSoundStore = defineStore("sound", {
   state: () => ({
     sounds: [],
+    limit: 15,
+    offset: 0,
+    soundsCount: null,
     loading: true,
   }),
+  
+  getters: {
+    displayLoadMore () {
+      return this.soundsCount > this.sounds.length;
+    }
+  },
 
   actions: {
-    async loadPublicSounds() {
-      const token = localStorage.getItem(TOKEN_KEY);
-      this.loading = true;
+    async loadPublicSounds(ignoreLoading: boolean = false) {
+      if (!ignoreLoading) {
+        this.loading = true;
+      }
 
-      const response = await axiosClient.get("/sounds", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const path = `/sounds?limit=${this.limit}&offset=${this.offset}`
+      const response = await getPath(path);
 
       this.sounds = response.data.data;
+
+      const countResponse = await getPath(`${path}&count=true`);
+      this.soundsCount = countResponse?.data?.data?.count;
+
       this.loading = false;
     },
-    async loadSoundsForUser(userId: number) {
+    async loadSoundsForUser(userId: number, ignoreLoading: boolean = false) {
       const token = localStorage.getItem(TOKEN_KEY);
-      this.loading = true;
+      if (!ignoreLoading) {
+        this.loading = true;
+      }
 
-      const response = await axiosClient.get(`/sounds?user_id=${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const path = `/sounds?user_id=${userId}&limit=${this.limit}&offset=${this.offset}`;
+      const response = await getPath(path);
 
       this.sounds = response.data.data;
+
+      const countResponse = await getPath(`${path}&count=true`);
+      this.soundsCount = countResponse?.data?.data?.count;
+
       this.loading = false;
     },
-    async loadSoundsFollowing() {
+    async loadSoundsFollowing(ignoreLoading: boolean = false) {
       const token = localStorage.getItem(TOKEN_KEY);
-      this.loading = true;
+      if (!ignoreLoading) {
+        this.loading = true;
+      }
 
-      const response = await axiosClient.get(`/sounds?following=true`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const path = `/sounds?following=true&limit=${this.limit}&offset=${this.offset}`;
+      const response = await getPath(path);
 
       this.sounds = response.data.data;
+
+      const countResponse = await getPath(`${path}&count=true`);
+      this.soundsCount = countResponse?.data?.data?.count;
+
       this.loading = false;
-    }
+    },
   },
 });

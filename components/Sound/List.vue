@@ -1,6 +1,9 @@
 <template>
   <div v-if="!soundStore.loading">
-    <div v-if="soundStore.sounds.length === 0" class="mt-3 text-slate-500 italic text-md">
+    <div
+      v-if="soundStore.sounds.length === 0"
+      class="mt-3 text-slate-500 italic text-md"
+    >
       No sounds found.
     </div>
     <div
@@ -10,7 +13,7 @@
     >
       <div
         :style="[
-          'width: 180px; height: 180px',
+          'width: 100px; height: 100px',
           sound.cover_file_path
             ? `background-image: url(http://localhost:8000${sound.cover_file_path})`
             : '',
@@ -50,10 +53,26 @@
         </ClientOnly -->
       </div>
     </div>
+
+    <button
+      class="ml-4 mt-8 border px-3 py-2 border-slate-500 text-slate-500 rounded"
+      @click.prevent="loadMore"
+      v-if="soundStore.displayLoadMore"
+    >
+      Load more
+    </button>
   </div>
 </template>
 <script lang="ts" setup>
-import { useSoundStore } from "../../stores/sound";
+import { LOAD_MORE_AMOUNT, useSoundStore } from "../../stores/sound";
+
+const emit = defineEmits(['load'])
 
 const soundStore = useSoundStore();
+
+const loadMore = async () => {
+  soundStore.limit += LOAD_MORE_AMOUNT;
+
+  await emit('load')
+}
 </script>

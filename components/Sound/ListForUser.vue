@@ -1,5 +1,5 @@
 <template>
-  <SoundList />
+  <SoundList @load="load(props.id, true)" />
 </template>
 
 <script lang="ts" setup>
@@ -11,5 +11,10 @@ const props = defineProps<{
 
 const soundStore = useSoundStore();
 
-await soundStore.loadSoundsForUser(props.id);
+const load = async (id: number, ignoreLoading: boolean = false) => {
+  await soundStore.loadSoundsForUser(id, ignoreLoading);
+}
+
+await load(props.id);
+
 </script>
