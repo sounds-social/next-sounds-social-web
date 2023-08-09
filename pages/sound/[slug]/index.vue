@@ -44,10 +44,16 @@
 
         <div>
           <div
-            :class="[`
+            :class="[
+              `
             px-3 py-1 select-none	
             border-2 rounded-md cursor-pointer text-lg mb-5 inline-block mr-4 items-center
-          `, { 'bg-red-500 text-white' : sound.has_liked, 'border border-red-400 text-red-600' : !sound.has_liked }]"
+          `,
+              {
+                'bg-red-500 text-white': sound.has_liked,
+                'border border-red-400 text-red-600': !sound.has_liked,
+              },
+            ]"
             @click.prevent="toggleLike"
           >
             <svg
@@ -82,12 +88,18 @@
         </div>
 
         <p class="text-lg max-w-3xl">{{ sound.description }}</p>
+
+        <h3 class="font-bold text-xl mt-10 text-slate-500">Comments</h3>
+
+        <div class="mt-4">
+          <SoundComments :sound="sound" @update="updateSoundForComments"></SoundComments>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { TOKEN_KEY, useAuthStore } from "@/stores/auth";
+import { TOKEN_KEY, useAuthStore } from "../../../stores/auth";
 import { axiosClient } from "../../../lib/axiosClient";
 
 const route = useRoute();
@@ -108,10 +120,13 @@ const loadSound = async () => {
   sound.value = response?.data?.data;
 };
 
+const updateSoundForComments = async () => {
+  sound.value = null
+  await loadSound();
+}
+
 const toggleLike = async () => {
   const liked = sound.value.has_liked;
-
-  console.log(liked);
 
   await axiosClient.post(
     `/likes`,
