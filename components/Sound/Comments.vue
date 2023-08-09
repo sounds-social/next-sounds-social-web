@@ -24,28 +24,64 @@
     <div v-if="comments.length === 0" class="italic text-gray-400 mt-4">
       No comments yet.
     </div>
-    <div v-for="comment in comments" class="my-7">
-      {{ comment.content }}
+    <div v-for="comment in comments" class="my-9">
+      <div class="flex">
+        <div
+          :style="[
+            comment.user.avatar_file_path
+              ? `background-image: url(http://localhost:8000${comment.user.avatar_file_path})`
+              : '',
+          ]"
+          class="bg-cover bg-center rounded-md w-5 h-5 mr-2"
+          :class="{
+            'bg-gradient-to-r from-cyan-500 to-blue-500':
+              !comment.user.avatar_file_path,
+          }"
+        ></div>
+
+        <NuxtLink :to="`/profile/${comment.user.slug}`">
+          {{ comment.user.name }}
+        </NuxtLink>
+      </div>
+
+      <div class="text-slate-500 mt-2">
+        {{ comment.content }}
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { getCurrentInstance } from 'vue'
+import { getCurrentInstance } from "vue";
 
 import { axiosClient } from "../../lib/axiosClient";
-import { TOKEN_KEY } from "../../stores/auth";
+import { TOKEN_KEY, useAuthStore } from "../../stores/auth";
 
-const emit = defineEmits(["update"]);
+const authStore = useAuthStore();
 
 const props = defineProps<{
   sound: any;
 }>();
 
-const comments = props.sound.comments;
+const comments = ref(null);
 
 const content = ref("");
 
+const loadComments = async () => {
+  const token = localStorage.getItem(TOKEN_KEY);
 
+  const response = await axiosClient.get(
+    `/comments?sound_id=${props.sound.id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  comments.value = response?.data?.data;
+};
+
+await loadComments();
 
 const addComment = async () => {
   if (content.value.length === 0) {
@@ -54,11 +90,11 @@ const addComment = async () => {
 
   const token = localStorage.getItem(TOKEN_KEY);
 
-  const response = await axiosClient.post(
+  await axiosClient.post(
     "/comments",
     {
       sound_id: props.sound.id,
-      user_id: props.sound.user.id,
+      user_id: authStore.user.id,
       content: content.value,
     },
     {
@@ -68,11 +104,8 @@ const addComment = async () => {
     }
   );
 
-  await emit("update");
+  await loadComments();
 
-  const instance = getCurrentInstance();
-  instance?.proxy?.$forceUpdate();
-
-  console.log(props.sound)
+  content.value = "";
 };
 </script>
