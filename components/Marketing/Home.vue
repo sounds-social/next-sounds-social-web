@@ -1,6 +1,8 @@
 <template>
   <div class="text-2xl text-center pt-6 text-slate-600 leading-relaxed">
-    <BaseTitle>Sounds Social 🎶</BaseTitle>
+    <div class="my-8">
+      <BaseTitle>Sounds Social 🎶</BaseTitle>
+    </div>
     
     <p class="mt-10">The open music platform to share your sounds.</p>
 
