@@ -3,20 +3,16 @@
     <div v-if="!authStore.loading">
       <div v-if="authStore.user">
         <div class="mb-12 mt-6">
-          <BaseTitle>#Following</BaseTitle>
+          <BaseTitle>#Global Sounds</BaseTitle>
         </div>
 
-        <SoundListFollowing />
-      </div>
-      <div v-else>
-        Marketing homepage
+        <SoundListPublic />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { useAuthStore } from "../stores/auth";
+import { useAuthStore } from "../../stores/auth";
 
-// TODO: where to load user data?
 const authStore = useAuthStore();
 </script>

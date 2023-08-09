@@ -46,5 +46,18 @@ export const useSoundStore = defineStore("sound", {
       this.sounds = response.data.data;
       this.loading = false;
     },
+    async loadSoundsFollowing() {
+      const token = localStorage.getItem(TOKEN_KEY);
+      this.loading = true;
+
+      const response = await axiosClient.get(`/sounds?following=true`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      this.sounds = response.data.data;
+      this.loading = false;
+    }
   },
 });

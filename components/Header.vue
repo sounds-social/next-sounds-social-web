@@ -14,6 +14,16 @@
 
       <NuxtLink
         class="text-md ml-10 flex items-center hover:text-blue-200 transition"
+        to="/explore/global"
+        :class="{
+          'text-blue-100': route.name === 'explore-global',
+        }"
+      >
+        Explore Global
+      </NuxtLink>
+
+      <NuxtLink
+        class="text-md ml-10 flex items-center hover:text-blue-200 transition"
         to="/sound/upload"
         :class="{
           'text-blue-100': route.name === 'sound-upload',
