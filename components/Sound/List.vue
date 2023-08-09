@@ -42,12 +42,12 @@
           </div>
         </div>
 
-        <ClientOnly>
+        <!-- ClientOnly>
           <Waveform
             :pathToSound="`http://localhost:8000${sound.sound_file_path}`"
             :id="sound.id"
           ></Waveform>
-        </ClientOnly>
+        </ClientOnly -->
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@
         <SoundListFollowing />
       </div>
       <div v-else>
-        Marketing homepage
+        <MarketingHome />
       </div>
     </div>
   </div>

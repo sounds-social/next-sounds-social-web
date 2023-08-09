@@ -18,6 +18,7 @@
         :class="{
           'text-blue-100': route.name === 'explore-global',
         }"
+        v-if="!authStore.loading && authStore.user"
       >
         Explore Global
       </NuxtLink>
