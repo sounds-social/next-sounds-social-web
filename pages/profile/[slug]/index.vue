@@ -61,6 +61,10 @@
         </div>
 
         <div class="mt-3">{{ profile.follows_count }} following</div>
+
+        <div class="mt-3">{{ profile.likes_count }} likes</div>
+          
+        <SoundLikesProfile :id="profile.id"></SoundLikesProfile>
       </div>
     </div>
   </div>
