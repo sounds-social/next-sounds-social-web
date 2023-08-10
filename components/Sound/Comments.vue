@@ -107,5 +107,7 @@ const addComment = async () => {
   await loadComments();
 
   content.value = "";
+
+  document?.activeElement?.blur();
 };
 </script>

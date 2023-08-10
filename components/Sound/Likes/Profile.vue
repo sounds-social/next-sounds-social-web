@@ -15,7 +15,6 @@
       </NuxtLink>
     </div>
   </div>
-  <!-- div class="text-lg mt-2 font-normal cursor-pointer">View all likes</div -->
 </template>
 <script lang="ts" setup>
 import { TOKEN_KEY } from "../../../stores/auth";

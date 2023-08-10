@@ -63,8 +63,15 @@
         <div class="mt-3">{{ profile.follows_count }} following</div>
 
         <div class="mt-3">{{ profile.likes_count }} likes</div>
-          
+
         <SoundLikesProfile :id="profile.id"></SoundLikesProfile>
+
+        <!-- NuxtLink
+          class="block text-lg mt-2 font-semibold cursor-pointer"
+          :to="`/sound/${profile.slug}/likes`"
+        >
+          View all likes
+        </NuxtLink -->
       </div>
     </div>
   </div>
