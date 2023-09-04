@@ -47,12 +47,20 @@
       <div class="text-slate-500 mt-2">
         {{ comment.content }}
       </div>
+
+      <div>
+        <div
+          v-if="authStore.user.id === comment.user.id"
+          class="cursor-pointer bg-red-500 font-bold text-white w-44 rounded-lg text-center mt-4 py-2 px-3"
+          @click="deleteComment(comment.id)"
+        >
+          Remove comment
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { getCurrentInstance } from "vue";
-
 import { axiosClient } from "../../lib/axiosClient";
 import { TOKEN_KEY, useAuthStore } from "../../stores/auth";
 
@@ -110,4 +118,19 @@ const addComment = async () => {
 
   document?.activeElement?.blur();
 };
+
+const deleteComment = async (id: number) => {
+  const token = localStorage.getItem(TOKEN_KEY);
+
+  await axiosClient.delete(
+    `/comments/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  await loadComments();
+}
 </script>
